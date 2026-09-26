@@ -48,6 +48,9 @@ export class AuthService {
     where: {
       email: dto.email,
     },
+    include: {
+      favorites: true,
+    },
   });
 
   if (!user) {
@@ -63,6 +66,7 @@ export class AuthService {
     throw new UnauthorizedException("Invalid credentials");
   }
 
+
   const accessToken = this.jwtService.sign({
     sub: user.id,
     email: user.email,
@@ -70,6 +74,13 @@ export class AuthService {
 
   return {
     accessToken,
+    user: {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      favorites: user.favorites.map((favorite) => favorite.moleculeId),
+    }
   };
 }
 }
