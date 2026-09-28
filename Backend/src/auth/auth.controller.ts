@@ -9,6 +9,7 @@ export class AuthController {
 
   @Post("register")
   register(@Body() dto: RegisterDto) {
+    console.log("Register DTO:", dto); // Log the received DTO for debugging
     return this.authService.register(dto);
   }
 
