@@ -19,7 +19,7 @@ export class AuthService {
     ) {}
 
   async register(dto: RegisterDto) {//what if the user data doesnt pass the validation?
-    const existingUser = await this.prisma.user.findUnique({//In casae of db down, credentials not valid ... prisma throws an error, nest catch and return 500 internal server error
+    const existingUser = await this.prisma.user.findUnique({//In case of db down, credentials not valid ... prisma throws an error, nest catch and return 500 internal server error
       where: {
         email: dto.email,
       },
