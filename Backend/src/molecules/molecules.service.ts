@@ -12,22 +12,22 @@ export class MoleculesService {
 
   async fetchFromRcsb(moleculeId: string) {
     const url = `https://files.rcsb.org/ligands/view/${moleculeId}.cif`;
+    let response: Response;
 
     try {
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new BadGatewayException(
-          `RCSB request failed, with status ${response.status}`,
-        );
-      }
-      const cifText = await response.text();
-      return this.cifParserService.parse(cifText);
-    } 
+      response = await fetch(url);
+    }
     catch {
       throw new BadGatewayException(
         "Could not communicate with RCSB",
       );
     }
+    if (!response.ok) {
+      throw new BadGatewayException(
+        `RCSB request failed, with status ${response.status}`,
+      );
+    }
+    const cifText = await response.text();
+    return this.cifParserService.parse(cifText);
   }
 }

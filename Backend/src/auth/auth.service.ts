@@ -18,7 +18,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     ) {}
 
-  async register(dto: RegisterDto) {//what if the user data doesnt pass the validation?
+  async register(dto: RegisterDto) {
     const existingUser = await this.prisma.user.findUnique({//In case of db down, credentials not valid ... prisma throws an error, nest catch and return 500 internal server error
       where: {
         email: dto.email,
@@ -70,7 +70,11 @@ export class AuthService {
   const accessToken = this.jwtService.sign({
     sub: user.id,
     email: user.email,
-  });
+  },
+  {
+    expiresIn: "2 minutes",
+  }
+);
 
   return {
     accessToken,
