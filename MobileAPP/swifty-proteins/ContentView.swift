@@ -201,12 +201,3 @@ struct SceneKitViewCH2: UIViewRepresentable {
        }
 }
 
-
-struct ContentView: View {
-    
-    var body: some View {
-       
-        ProteinList()
-            .ignoresSafeArea()
-    }
-}
